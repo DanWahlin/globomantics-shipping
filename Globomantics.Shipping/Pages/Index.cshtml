@@ -1,0 +1,88 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Shipments";
+}
+
+<div class="page-header">
+    <h1>Shipments</h1>
+    <form method="get" class="provider-filter">
+        <input type="hidden" name="show" value="@Model.Show">
+        <label for="provider">Provider</label>
+        <select id="provider" name="provider" onchange="this.form.submit()">
+            <option value="">All providers</option>
+            @foreach (var provider in Model.Providers)
+            {
+                <option value="@provider.ProviderId" selected="@(provider.ProviderId == Model.Provider)">@provider.DisplayName</option>
+            }
+        </select>
+        <noscript><button class="button" type="submit">Filter</button></noscript>
+    </form>
+</div>
+
+<nav class="tabs" aria-label="Filter shipments by status">
+    @foreach (var (key, label) in IndexModel.Views)
+    {
+        <a asp-page="/Index"
+           asp-route-show="@key"
+           asp-route-provider="@Model.Provider"
+           aria-current="@(key == Model.Show ? "page" : null)"
+           class="@(key == "attention" ? "tab-attention" : null)">
+            @label <span class="count">@Model.Counts[key]</span>
+        </a>
+    }
+</nav>
+
+@if (Model.Shipments.Count == 0)
+{
+    <div class="empty">
+        <p>No shipments match this filter.</p>
+        <a asp-page="/Index">Show all shipments</a>
+    </div>
+}
+else
+{
+    <div class="table-wrap">
+        <table class="shipments">
+            <thead>
+                <tr>
+                    <th scope="col">Reference</th>
+                    <th scope="col">Recipient</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Provider</th>
+                    <th scope="col">Service</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Last update</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Shipments)
+                {
+                    var shipment = item.Shipment;
+                    <tr>
+                        <td>
+                            <a class="reference" asp-page="/Shipments/Details" asp-route-reference="@shipment.Reference">@shipment.Reference</a>
+                        </td>
+                        <td>@shipment.Recipient.Name</td>
+                        <td>@shipment.Recipient.City</td>
+                        <td>@item.Provider.DisplayName</td>
+                        <td>
+                            @if (item.Service is not null)
+                            {
+                                @item.Service.Name
+                            }
+                            else
+                            {
+                                <span class="unmapped">@shipment.ServiceCode (unrecognised)</span>
+                            }
+                        </td>
+                        <td><partial name="_StatusPill" model="item.Status" /></td>
+                        <td>
+                            <time datetime="@shipment.LastActivity.ToString("O")" title="@Formatting.Timestamp(shipment.LastActivity)">@Formatting.TimeAgo(shipment.LastActivity, Model.Now)</time>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,14 @@
+@page
+@model ErrorModel
+@{
+    ViewData["Title"] = "Something went wrong";
+}
+
+<div class="page-header">
+    <h1>Something went wrong</h1>
+</div>
+<p class="lede">Globomantics Shipping couldn't finish that request. Go back to <a asp-page="/Index">shipments</a> and try again.</p>
+@if (Model.RequestId is not null)
+{
+    <p class="muted">Request ID: @Model.RequestId</p>
+}

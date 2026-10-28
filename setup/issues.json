@@ -1,0 +1,12 @@
+[
+  {
+    "title": "Add Havsgren Lines service codes",
+    "body": "issues/havsgren-lines-service-codes.md",
+    "labels": ["provider: havsgren-lines", "adapter"]
+  },
+  {
+    "title": "Map Havsgren Lines tracking statuses",
+    "body": "issues/havsgren-lines-tracking-statuses.md",
+    "labels": ["provider: havsgren-lines", "adapter"]
+  }
+]

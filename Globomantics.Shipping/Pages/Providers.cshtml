@@ -1,0 +1,99 @@
+@page
+@model ProvidersModel
+@{
+    ViewData["Title"] = "Providers";
+}
+
+<div class="page-header">
+    <h1>Providers</h1>
+</div>
+
+<div class="providers">
+    @foreach (var summary in Model.Summaries)
+    {
+        var provider = summary.Provider;
+
+        <section class="provider" aria-labelledby="provider-@provider.ProviderId">
+            <header class="provider-header">
+                <h2 id="provider-@provider.ProviderId">@provider.DisplayName</h2>
+                @if (provider.IsOnboarding())
+                {
+                    <span class="pill pill-unknown">Onboarding</span>
+                }
+                <a class="provider-shipments" asp-page="/Index" asp-route-provider="@provider.ProviderId">
+                    @summary.ShipmentCount @(summary.ShipmentCount == 1 ? "shipment" : "shipments")
+                </a>
+            </header>
+
+            <h3>Services</h3>
+            @if (provider.Services.Count == 0)
+            {
+                <p class="muted">None set up yet, so @provider.DisplayName can't be booked.</p>
+            }
+            else
+            {
+                <table class="codes">
+                    <thead>
+                        <tr>
+                            <th scope="col">Code</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var service in provider.Services)
+                        {
+                            <tr>
+                                <td><code>@service.Code</code></td>
+                                <td>@service.Name</td>
+                                <td>@service.Level.DisplayName()</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+
+            <h3>Tracking codes</h3>
+            @if (provider.TrackingStatuses.Count == 0)
+            {
+                <p class="muted">None set up yet, so every update shows as unknown.</p>
+            }
+            else
+            {
+                <table class="codes">
+                    <thead>
+                        <tr>
+                            <th scope="col">Shown as</th>
+                            <th scope="col">Provider codes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var group in provider.TrackingStatuses.GroupBy(pair => pair.Value).OrderBy(group => group.Key))
+                        {
+                            <tr>
+                                <td><partial name="_StatusPill" model="group.Key" /></td>
+                                <td class="code-cell">
+                                    @foreach (var (code, _) in group)
+                                    {
+                                        <code>@code</code>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+
+            @if (summary.UnrecognisedCodes.Count > 0)
+            {
+                <p class="warning">
+                    Not recognised:
+                    @foreach (var code in summary.UnrecognisedCodes)
+                    {
+                        <code>@code</code>
+                    }
+                </p>
+            }
+        </section>
+    }
+</div>

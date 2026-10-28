@@ -1,0 +1,4 @@
+[
+  { "name": "provider: havsgren-lines", "color": "FF1675", "description": "Onboarding Havsgren Lines" },
+  { "name": "adapter", "color": "00A3FF", "description": "Provider adapter mappings" }
+]

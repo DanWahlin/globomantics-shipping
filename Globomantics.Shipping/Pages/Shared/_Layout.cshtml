@@ -1,0 +1,36 @@
+@{
+    var currentPage = ViewContext.RouteData.Values["page"] as string ?? "";
+    var onProviders = currentPage == "/Providers";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"] | Globomantics Shipping</title>
+    <link rel="icon" href="~/favicon.png" type="image/png">
+    <link rel="preload" href="~/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true">
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" asp-page="/Index">
+                <img class="brand-mark" src="~/images/logo.png" alt="">
+                Globomantics Shipping
+            </a>
+            <nav class="nav" aria-label="Main">
+                <a asp-page="/Index" aria-current="@(onProviders ? null : "page")">Shipments</a>
+                <a asp-page="/Providers" aria-current="@(onProviders ? "page" : null)">Providers</a>
+            </nav>
+            <a class="button button-primary" asp-page="/Shipments/New">Book shipment</a>
+        </div>
+    </header>
+
+    <main class="page">
+        @RenderBody()
+    </main>
+
+    <footer class="disclaimer">This demo uses fictional names and people. No affiliation with or endorsement by any real company</footer>
+</body>
+</html>

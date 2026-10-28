@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Globomantics.Shipping/Globomantics.Shipping.csproj" />
+  <Project Path="Globomantics.Shipping.Tests/Globomantics.Shipping.Tests.csproj" />
+</Solution>

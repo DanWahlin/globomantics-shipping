@@ -1,0 +1,100 @@
+@page "/shipments/{reference}"
+@model Globomantics.Shipping.Pages.Shipments.DetailsModel
+@{
+    var shipment = Model.Overview.Shipment;
+    var provider = Model.Overview.Provider;
+    var service = Model.Overview.Service;
+    ViewData["Title"] = shipment.Reference;
+}
+
+<a class="back" asp-page="/Index">Back to shipments</a>
+
+@if (Model.Notice is not null)
+{
+    <p class="notice" role="status">@Model.Notice</p>
+}
+
+<div class="details">
+    <article class="label" aria-label="Shipping label">
+        <div class="label-top">
+            <span>@provider.DisplayName</span>
+            <span>@(service?.Level.DisplayName() ?? "Unknown service")</span>
+        </div>
+
+        <div class="label-reference">
+            <h1>@shipment.Reference</h1>
+            <partial name="_StatusPill" model="Model.Overview.Status" />
+        </div>
+
+        <div class="label-address">
+            <h2>Deliver to</h2>
+            <p>
+                <strong>@shipment.Recipient.Name</strong><br>
+                @shipment.Recipient.Street<br>
+                @shipment.Recipient.PostalCode @shipment.Recipient.City
+            </p>
+        </div>
+
+        <dl class="label-facts">
+            <div>
+                <dt>Service</dt>
+                <dd>
+                    @if (service is not null)
+                    {
+                        @service.Name
+                    }
+                    else
+                    {
+                        <span class="unmapped">@shipment.ServiceCode (not recognised)</span>
+                    }
+                </dd>
+            </div>
+            <div>
+                <dt>Weight</dt>
+                <dd>@Formatting.Weight(shipment.WeightKg)</dd>
+            </div>
+            <div>
+                <dt>Booked</dt>
+                <dd>@Formatting.Timestamp(shipment.BookedAt)</dd>
+            </div>
+        </dl>
+
+        <div class="label-from">
+            <span>From: Globomantics Shipping warehouse, Gothenburg</span>
+        </div>
+
+        <partial name="_Barcode" model="shipment.Reference" />
+    </article>
+
+    <section class="tracking" aria-labelledby="tracking-heading">
+        <h2 id="tracking-heading">Tracking</h2>
+
+        @if (Model.Timeline.Count == 0)
+        {
+            <p class="muted">@provider.DisplayName hasn't sent any updates yet. They usually arrive once the parcel is collected.</p>
+        }
+        else
+        {
+            <ol class="timeline">
+                @foreach (var (trackingEvent, status) in Model.Timeline)
+                {
+                    <li class="timeline-item tone-@status.Tone()">
+                        <strong>@status.DisplayName()</strong>
+                        <time datetime="@trackingEvent.OccurredAt.ToString("O")">@Formatting.Timestamp(trackingEvent.OccurredAt)</time>
+                        <p class="timeline-detail">
+                            @trackingEvent.Location
+                            @if (status is ShipmentStatus.Unknown)
+                            {
+                                <span class="unmapped">@provider.DisplayName sent <code>@trackingEvent.StatusCode</code>, which Globomantics Shipping doesn't recognise yet</span>
+                            }
+                            else
+                            {
+                                <span class="timeline-code">Provider code <code>@trackingEvent.StatusCode</code></span>
+                            }
+                        </p>
+                    </li>
+                }
+            </ol>
+        }
+    </section>
+</div>
