@@ -4,7 +4,11 @@ namespace Globomantics.Shipping.Providers.HavsgrenLines;
 
 public static class HavsgrenLinesServiceCodes
 {
-    // Havsgren Lines is still being onboarded. Its service codes are defined in the
-    // Havsgren Lines integration spec in the provider catalog.
-    public static IReadOnlyList<ServiceOption> All { get; } = [];
+    public static IReadOnlyList<ServiceOption> All { get; } =
+    [
+        new("HVL-ECO", "Havsgren Economy", ServiceLevel.Economy, TransitDays: 5),
+        new("HVL-STD", "Havsgren Standard", ServiceLevel.Standard, TransitDays: 2),
+        new("HVL-NXT", "Havsgren Next Day", ServiceLevel.Express, TransitDays: 1),
+        new("HVL-SDY", "Havsgren Same Day", ServiceLevel.SameDay, TransitDays: 0),
+    ];
 }
