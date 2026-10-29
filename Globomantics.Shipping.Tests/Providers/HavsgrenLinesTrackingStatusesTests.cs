@@ -21,6 +21,7 @@ public class HavsgrenLinesTrackingStatusesTests
     [InlineData("CUSTOMS_HOLD", ShipmentStatus.OnHold)]
     [InlineData("RETURNED_TO_SENDER", ShipmentStatus.Returned)]
     [InlineData("IN_LOCKER", ShipmentStatus.Delivered)]
+    [InlineData("in_locker", ShipmentStatus.Delivered)]
     public void MapsTrackingCode(string code, ShipmentStatus expected)
     {
         Assert.Equal(expected, _adapter.ToShipmentStatus(code));
