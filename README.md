@@ -2,7 +2,7 @@
 
 Globomantics Shipping is a small shipping app used in the Pluralsight course **Advanced GitHub Copilot**. It books parcels with delivery providers and shows where each one is.
 
-Every provider speaks its own language. Harbor Post says `OUT_FOR_DELIVERY`, Havsgren Lines says `WITH_COURIER`. Globomantics Shipping translates each provider's service and tracking codes into its own statuses through a small adapter per provider. The team is now onboarding a second provider, Havsgren Lines, and that work is the backlog you'll hand to GitHub Copilot in the course.
+Every provider speaks its own language. Harbor Post says `OUT_FOR_DELIVERY`, Havsgren Lines says `OFD`. Globomantics Shipping translates each provider's service and tracking codes into its own statuses through a small adapter per provider. The team is now onboarding a second provider, Havsgren Lines, and that work is the backlog you'll hand to GitHub Copilot in the course.
 
 ## What you need
 

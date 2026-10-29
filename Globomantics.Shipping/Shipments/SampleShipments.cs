@@ -61,20 +61,20 @@ internal static class SampleShipments
             (40, "AT_HUB", "Havsgren Lines terminal Jönköping"),
             (30, "IN_LINEHAUL", "Jönköping to Stockholm"),
             (14, "AT_HUB", "Havsgren Lines terminal Stockholm"),
-            (3, "WITH_COURIER", "Stockholm")),
+            (3, "OFD", "Stockholm")),
 
         Build(now, "GS-104209", "havsgren-lines", "HVL-NXT", new("Grace Walker", "Exempelgatan 21", "116 46", "Stockholm"), 0.7m,
             (30, "MANIFESTED", "Gothenburg"),
             (26, "COLLECTED", "Gothenburg warehouse"),
             (20, "AT_HUB", "Havsgren Lines terminal Stockholm"),
-            (8, "WITH_COURIER", "Stockholm"),
+            (8, "OFD", "Stockholm"),
             (6, "DELIVERED_NEIGHBOUR", "Stockholm")),
 
         Build(now, "GS-104210", "havsgren-lines", "HVL-ECO", new("Lucas Hill", "Exempelvägen 3", "753 20", "Uppsala"), 6.5m,
             (70, "MANIFESTED", "Gothenburg"),
             (66, "COLLECTED", "Gothenburg warehouse"),
             (60, "AT_HUB", "Havsgren Lines terminal Jönköping"),
-            (26, "WITH_COURIER", "Uppsala"),
+            (26, "OFD", "Uppsala"),
             (24, "ATTEMPT_FAILED", "Uppsala"),
             (4, "IN_LOCKER", "Uppsala Central parcel locker")),
 
