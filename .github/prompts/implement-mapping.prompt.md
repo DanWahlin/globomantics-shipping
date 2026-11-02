@@ -2,7 +2,7 @@
 description: Implement a provider's service code or tracking status mapping from its spec
 agent: agent
 model: Claude Sonnet 4.5
-tools: ['search', 'edit', 'runTests']
+tools: ['search', 'edit', 'execute/runTests']
 ---
 
 Implement the ${input:mapping:service codes or tracking statuses} mapping for the ${input:provider:provider name} provider, using version ${input:apiVersion:API version} of its spec.
