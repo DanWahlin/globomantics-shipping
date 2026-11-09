@@ -2,6 +2,7 @@ using Globomantics.Shipping.Providers;
 using Globomantics.Shipping.Providers.GreyvallCouriers;
 using Globomantics.Shipping.Providers.HarborPost;
 using Globomantics.Shipping.Providers.HavsgrenLines;
+using Globomantics.Shipping.Providers.TornvikCouriers;
 using Globomantics.Shipping.Shipments;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,7 @@ builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<IProviderAdapter, HarborPostAdapter>();
 builder.Services.AddSingleton<IProviderAdapter, HavsgrenLinesAdapter>();
 builder.Services.AddSingleton<IProviderAdapter, GreyvallCouriersAdapter>();
+builder.Services.AddSingleton<IProviderAdapter, TornvikCouriersAdapter>();
 builder.Services.AddSingleton<ProviderDirectory>();
 builder.Services.AddSingleton<ShipmentStore>();
 
