@@ -46,6 +46,7 @@ Globomantics.Shipping/
   Providers/          one folder per delivery provider
     HarborPost/       adapter, service codes, tracking statuses
     HavsgrenLines/     being onboarded, nothing mapped yet
+    TornvikCouriers/   adapter, service codes, tracking statuses
   Shipments/          shipments, statuses, and the in-memory store
   Pages/              the Razor Pages UI
 Globomantics.Shipping.Tests/    tests, mirroring the app's folders
